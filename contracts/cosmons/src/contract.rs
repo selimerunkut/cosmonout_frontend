@@ -50,10 +50,10 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
 ) -> Result<HandleResponse, ContractError> {
     match msg {
         HandleMsg::Mint(msg) => handle_mint(deps, env, info, msg),
-        HandleMsg::BattleMonster {
+        HandleMsg::Battlecosmonaut {
             attacker_id,
             defender_id,
-        } => handle_battle_monster(deps, env, info, attacker_id, defender_id),
+        } => handle_battle_cosmonaut(deps, env, info, attacker_id, defender_id),
         HandleMsg::Approve {
             spender,
             token_id,
@@ -78,7 +78,7 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
     }
 }
 
-pub fn handle_battle_monster<S: Storage, A: Api, Q: Querier>(
+pub fn handle_battle_cosmonaut<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     _env: Env,
     _info: MessageInfo,
@@ -99,7 +99,7 @@ pub fn handle_battle_monster<S: Storage, A: Api, Q: Querier>(
     Ok(HandleResponse {
         messages: vec![],
         attributes: vec![
-            attr("action", "battle_monster"),
+            attr("action", "battle_cosmonaut"),
             attr("attacker_id", attacker_id),
             attr("defender_id", defender_id),
         ],

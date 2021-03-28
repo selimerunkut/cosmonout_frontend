@@ -34,7 +34,7 @@ pub enum HandleMsg {
         token_id: String,
         msg: Option<Binary>,
     },
-    BattleMonster {
+    Battlecosmonaut {
         attacker_id: String,
         defender_id: String,
     },
@@ -71,7 +71,7 @@ pub struct MintMsg {
     pub owner: HumanAddr,
     /// Identifies the asset to which this NFT represents
     pub name: String,
-    // Monster level
+    // Cosmonaut level
     pub level: u64,
     /// Describes the asset to which this NFT represents (may be empty)
     pub description: Option<String>,

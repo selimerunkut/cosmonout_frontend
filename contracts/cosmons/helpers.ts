@@ -30,33 +30,46 @@ interface Options {
 }
 
 const defaultOptions: Options = {
-  httpUrl: 'https://rest.cosmwasm.hub.hackatom.dev',
+  httpUrl: 'https://rest.cosmwasm.hub.hackatom.org',
   networkId: 'hackatom-wasm',
   feeToken: 'ucosm',
   gasPrice: GasPrice.fromString("0.025ucosm"),
-  bech32prefix: 'cosmos',
+  bech32prefix: 'wasm',
   faucetToken: 'COSM',
-  faucetUrl: 'https://faucet.cosmwasm.hub.hackatom.dev/credit',
+  faucetUrl: 'https://faucet.cosmwasm.hub.hackatom.org',
   hdPath: makeCosmoshubPath(0),
-  defaultKeyFile: path.join(process.env.HOME, ".hackatom.key"),
+  defaultKeyFile: path.join(process.env.HOME, "node_key.json"),
   gasLimits: {
     upload: 1500000,
     init: 600000,
     register: 800000,
     transfer: 80000,
   },
-}
+} 
+
+/* const defaultOptions: Options = {
+  httpUrl: 'https://rpc.cosmwasm.hub.hackatom.org',
+  networkId: 'hackatom-ru',
+  gasPrice:  GasPrice.fromString("0.025ucosm"),
+  bech32prefix: 'wasm',
+  feeToken: 'ucosm',
+  faucetToken: 'COSM',
+  faucetUrl: 'https://faucet.cosmwasm.hub.hackatom.org',
+  hdPath: makeCosmoshubPath(0),
+  defaultKeyFile: path.join(process.env.HOME, "node_key.json"),
+  gasLimits: {}
+} */
 
 const localnetOptions: Options = {
   httpUrl: "http://localhost:1317",
   networkId: 'localnet',
   feeToken: 'ucosm',
   gasPrice: GasPrice.fromString("0.025ucosm"),
-  bech32prefix: 'cosmos',
+  bech32prefix: 'wasm',
   hdPath: makeCosmoshubPath(0),
   faucetToken: "SHELL",
   faucetUrl: "http://localhost",
-  defaultKeyFile: path.join(process.env.HOME, "localnet.key"),
+  defaultKeyFile: path.join(process.env.HOME, "node_key.json"),
   gasLimits: {
     upload: 1500000,
     init: 600000,
@@ -236,7 +249,7 @@ interface CW721Instance {
 
   // actions
   mint: (tokenId: TokenId, owner: string, name: string, level: number, description?: string, image?: string) => Promise<string>
-  battleMonster: (attacker_id: TokenId, defender_id: TokenId) => Promise<any>
+  battlecosmonaut: (attacker_id: TokenId, defender_id: TokenId) => Promise<any>
   transferNft: (recipient: string, tokenId: TokenId) => Promise<string>
   sendNft: (contract: string, token_id: TokenId, msg?: BinaryType) => Promise<string>
   approve: (spender: string, tokenId: TokenId, expires?: Expiration) => Promise<string>
@@ -320,9 +333,9 @@ const CW721 = (client: SigningCosmWasmClient): CW721Contract => {
       return result.transactionHash;
     }
 
-    // battle Monster
-    const battleMonster = async (attacker_id: TokenId, defender_id: TokenId): Promise<string> => {
-      const result = await client.execute(contractAddress, { battle_monster: { attacker_id, defender_id } });
+    // battle Cosmonaut
+    const battlecosmonaut = async (attacker_id: TokenId, defender_id: TokenId): Promise<string> => {
+      const result = await client.execute(contractAddress, { battle_cosmonaut: { attacker_id, defender_id } });
       return result.transactionHash;
     }
 
@@ -403,7 +416,7 @@ const CW721 = (client: SigningCosmWasmClient): CW721Contract => {
       contractInfo,
       minter,
       mint,
-      battleMonster,
+      battlecosmonaut,
       ownerOf,
       approvedForAll,
       nftInfo,
@@ -450,43 +463,3 @@ const CW721 = (client: SigningCosmWasmClient): CW721Contract => {
 
   return { upload, instantiate, use };
 }
-
-/*
-const client = await useOptions(defaultOptions).setup("test");
-const partner = await useOptions(defaultOptions).setup("test", ".localnet2.key");
-
-const address = client.senderAddress;
-const partnerAddr = partner.senderAddress;
-
-const cw721 = CW721(client);
-
-client.getAccount()
-partner.getAccount()
-
-const codeId = 94;
-
-const initMsg = { name: "Cosmons", symbol: "mons",  minter: address };
-
-const contract = await client.instantiate(codeId, initMsg, "Virtual Cosmons 1");
-
-const mine = cw721.use(contract.contractAddress);
-
-continue or stop here and jump to 2) 
-
-mine.mint("monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb", address, "Cosmos", "Minted Cosmon!");
-
-mine.nftInfo("monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb")
-
-
-----
-2)
-
-mine.mint("monster112sarcsb", address, "Rustmorph", 20, "The Rustmorph is the coolest of the six original monster from Neptun");
-mine.mint("monster112awrcsx", address, "Emberhand", 25, "The Rustmorph is the tallest of the five original monster from Saturn");
-
-mine.nftInfo("monster112sarcsb")
-mine.nftInfo("monster112awrcsx")
-
-mine.battleMonster("monster112sarcsb","monster112awrcsx");
-
-*/

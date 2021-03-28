@@ -23,12 +23,19 @@ For hackatom net, you need to use `defaultOptions` in useOptions.
 
 ```typescript
 // Hackatom_V Net
-const client = await useOptions(defaultOptions).setup(<YOUR PASSWORD>);
-const partner = await useOptions(defaultOptions).setup(<YOUR PASSWORD>, "/Users/user/.hackatom2.key");
+const client = await useOptions(defaultOptions).setup(
+  "12345678",
+  "client_hackatom.key"
+);
+const partner = await useOptions(defaultOptions).setup(
+  "12345678",
+  "partner_hackatom.key"
+);
 
 // localnet
-const client = await useOptions(localnetOptions).setup(<YOUR PASSWORD>, "/Users/user/localnet.key");
-const partner = await useOptions(localnetOptions).setup(<YOUR PASSWORD>, "/Users/user/localnet2.key");
+const client = await useOptions(localnetOptions).setup("12345678", "fred.key");
+const partner = await useOptions(localnetOptions).setup("12345678", "partner.key");
+);
 
 const address = client.senderAddress;
 const partnerAddr = partner.senderAddress;
@@ -43,8 +50,8 @@ const cw721 = CW721(client);
 ### Verify Funds in the Account
 
 ```typescript
-client.getAccount()
-partner.getAccount()
+client.getAccount();
+partner.getAccount();
 ```
 
 ### Use Existing Accounts
@@ -83,7 +90,12 @@ const mine = cw721.use(contract.contractAddress);
 ### Mint a Cosmon NFT
 
 ```typescript
-mine.mint("monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb", address, "Cosmos", "Minted Cosmon!");
+mine.mint(
+  "cosmonaut112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb",
+  address,
+  "Cosmos",
+  "Minted Cosmon!"
+);
 ```
 
 ### Approve Token Transfer
@@ -91,7 +103,10 @@ mine.mint("monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb", address, 
 > :warning: Needs to be called before `transferNft`.
 
 ```typescript
-mine.approve(address, "monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb");
+mine.approve(
+  address,
+  "cosmonaut112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb"
+);
 ```
 
 ### Revoke Token Transfer
@@ -99,7 +114,10 @@ mine.approve(address, "monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb
 > :warning: `transferNft` will not work after using `revoke`.
 
 ```typescript
-mine.revoke(address, "monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb");
+mine.revoke(
+  address,
+  "cosmonaut112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb"
+);
 ```
 
 ### Transfer Token to Partner
@@ -107,18 +125,21 @@ mine.revoke(address, "monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb"
 > :warning: Needs to be called after `approve`.
 
 ```typescript
-mine.transferNft(partnerAddr, "monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb");
+mine.transferNft(
+  partnerAddr,
+  "cosmonaut112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb"
+);
 ```
 
 #### Queries
 
 ```typescript
-mine.nftInfo("monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb")
-mine.ownerOf("monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb")
-mine.numTokens()
-mine.tokens(address, "", 10)
-mine.allNftInfo("monster112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb")
-mine.allTokens("", 10)
+mine.nftInfo("cosmonaut112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb");
+mine.ownerOf("cosmonaut112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb");
+mine.numTokens();
+mine.tokens(address, "", 10);
+mine.allNftInfo("cosmonaut112a9lf95atqvyejqe22xnna8x4mfqd75tkq2kvwcjyysarcsb");
+mine.allTokens("", 10);
 ```
 
 ### Errata
@@ -129,15 +150,14 @@ Faucet is not supported.
 
 This repo contains two license, [Apache 2.0](./LICENSE-APACHE) and
 [AGPL 3.0](./LICENSE-AGPL.md). All crates in this repo may be licensed
-as one or the other. Please check the `NOTICE` in each crate or the 
+as one or the other. Please check the `NOTICE` in each crate or the
 relevant `Cargo.toml` file for clarity.
 
-All *specifications* will always be Apache-2.0. All contracts that are
-meant to be *building blocks* will also be Apache-2.0. This is along
+All _specifications_ will always be Apache-2.0. All contracts that are
+meant to be _building blocks_ will also be Apache-2.0. This is along
 the lines of Open Zepellin or other public references.
 
-Contracts that are "ready to deploy" may be licensed under AGPL 3.0 to 
+Contracts that are "ready to deploy" may be licensed under AGPL 3.0 to
 encourage anyone using them to contribute back any improvements they
 make. This is common practice for actual projects running on Ethereum,
 like Uniswap or Maker DAO.
-

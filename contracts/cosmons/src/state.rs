@@ -15,7 +15,7 @@ pub struct TokenInfo {
     /// Identifies the asset to which this NFT represents
     pub name: String,
 
-    //Add monster level
+    //Add Cosmonaut level
     pub level: u64,
     /// Describes the asset to which this NFT represents
     pub description: String,

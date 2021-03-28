@@ -20,7 +20,7 @@
       ]
     },
     "level": {
-      "description": "Describes Monster level",
+      "description": "Describes Cosmonaut level",
       "type": "integer",
       "format": "uint64",
       "minimum": 0.0
